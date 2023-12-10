@@ -5,8 +5,8 @@ from django.http import HttpResponse
 class ProjectsCRUD:
     @staticmethod
     def get_single(request, pk: str):
-        return HttpResponse(f'Single project #{pk}')
+        return render(request, 'projects/single_projects.html')
 
     @staticmethod
     def get_multi(request):
-        return HttpResponse('All products')
+        return render(request, 'projects/multi_projects.html')
