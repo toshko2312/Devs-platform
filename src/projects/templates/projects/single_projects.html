@@ -1,3 +1,29 @@
 {% include 'navbar.html' %}
 
-<h1>Single Project with id {{ pk }}</h1>
+<h1>Project with id {{ pk }}</h1>
+
+<li>Title: {{project.title}}</li>
+<li>Description: {{project.description}}</li>
+
+{% if project.demo_link %}
+<li>Demo Link: <a href="{{project.demo_link}}">{{project.demo_link}}</a></li>
+{% endif %}
+
+{% if project.source_link %}
+<li>Source Link: <a href="{{project.source_link}}">{{project.source_link}}</a></li>
+{% endif %}
+
+<li>Votes: {{project.vote_total}}</li>
+<li>Ratio: {{project.vote_ratio}}%</li>
+<li>Created: {{project.created}}</li>
+
+<li>Tags:
+{% for tag in project.tags.all %}
+<span style='border:2px solid lightblue'>{{tag}},</span>
+{% endfor %}
+</li>
+
+
+
+
+

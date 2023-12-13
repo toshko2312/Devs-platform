@@ -4,17 +4,12 @@
 
 <P>Hello, you are on the {{msg}} page </P>
 
-{% if number > 10 %}
-    <p>Number is greater than 10</p>
-{% else %}
-    <p>Number is less than 10</p>
-{% endif %}
 
 <hr>
 <h1>Projects</h1>
 <ul>
     {% for project in projects %}
-        <li>Description: <a href="{% url 'project' project.id %}">{{project.description}}</a></li>
+        <li>Title: <a href="{% url 'project' project.id %}">{{project.title}}</a></li>
     {% endfor %}
 </ul>
 

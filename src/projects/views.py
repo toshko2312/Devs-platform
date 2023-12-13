@@ -1,23 +1,21 @@
 from django.shortcuts import render
 from django.http import HttpResponse
+from .models import Project
 
 
 class ProjectsCRUD:
     @staticmethod
     def get_single(request, pk: str):
-        return render(request, 'projects/single_projects.html', {'pk': pk})
+        project = Project.objects.get(id=pk)
+        content = {
+            'pk': pk,
+            'project': project
+        }
+        return render(request, 'projects/single_projects.html', context=content)
 
     @staticmethod
     def get_multi(request):
-        msg = 'projects'
-        number = 11
-        projects = [{
-            'id': '1',
-            'description': 'Description of project 1'},
-            {'id': '2',
-             'description': 'Description of project 2'
-             }]
-        content = {'msg': msg,
-                   'number': number,
-                   'projects': projects}
+        projects = Project.objects.all()
+        content = {'projects': projects,
+                   'msg': 'Projects'}
         return render(request, 'projects/multi_projects.html', context=content)
