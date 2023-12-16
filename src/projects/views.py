@@ -1,6 +1,8 @@
 from django.shortcuts import render
 from django.http import HttpResponse
+
 from .models import Project
+from .forms import ProjectForm
 
 
 class ProjectsCRUD:
@@ -19,3 +21,9 @@ class ProjectsCRUD:
         content = {'projects': projects,
                    'msg': 'Projects'}
         return render(request, 'projects/multi_projects.html', context=content)
+
+    @staticmethod
+    def create(request):
+        form = ProjectForm()
+        content = {'form': form}
+        return render(request, 'projects/project_form.html', context=content)
