@@ -53,7 +53,6 @@ class ProjectsCRUD:
         content = {'object': project}
 
         if request.method == 'POST':
-            print(request)
             project.delete()
             return redirect('projects')
 
