@@ -13,4 +13,12 @@ class UsersCRUD:
 
     @staticmethod
     def get_single(request, pk: str):
-        return render(request, 'users/user-profile.html')
+        user = Profile.objects.get(id=pk)
+        topSkills = user.skill_set.exclude(description__exact='')
+        otherSkills = user.skill_set.filter(description='')
+        content = {
+            'user': user,
+            'topSkills': topSkills,
+            'otherSkills': otherSkills
+        }
+        return render(request, 'users/user-profile.html', context=content)
