@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate, logout
 from django.contrib import messages
 from .models import Profile, User
+from .forms import CustomUserCreationForm
 
 
 class UsersCRUD:
@@ -27,6 +28,9 @@ class UsersCRUD:
 
     @staticmethod
     def login_user(request):
+        page = 'login'
+        content = {'page': page}
+
         if request.user.is_authenticated:
             return redirect('users')
 
@@ -45,10 +49,32 @@ class UsersCRUD:
             else:
                 messages.error(request, 'Incorrect credentials.')
 
-        return render(request, 'users/login_registration.html')
+        return render(request, 'users/login_registration.html', context=content)
 
     @staticmethod
     def logout_user(request):
         logout(request)
         messages.success(request, 'Logged out.')
         return redirect('login')
+
+    @staticmethod
+    def register_user(request):
+        page = 'register'
+        form = CustomUserCreationForm()
+        content = {'page': page,
+                   'form': form}
+
+        if request.method == 'POST':
+            form = CustomUserCreationForm(request.POST)
+            if form.is_valid():
+                user = form.save(commit=False)
+                user.username = user.username.lower()
+                user.save()
+
+                messages.success(request, 'User account was created!')
+                login(request, user)
+                return redirect('users')
+            else:
+                messages.error(request, 'An error has occurred during registration.')
+
+        return render(request, 'users/login_registration.html', context=content)
