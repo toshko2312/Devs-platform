@@ -54,7 +54,7 @@ class UsersCRUD:
     @staticmethod
     def logout_user(request):
         logout(request)
-        messages.success(request, 'Logged out.')
+        messages.info(request, 'Logged out.')
         return redirect('login')
 
     @staticmethod
