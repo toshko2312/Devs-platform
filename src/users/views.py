@@ -3,7 +3,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate, logout
 from django.contrib import messages
 from .models import Profile, User
-from .forms import CustomUserCreationForm
+from .forms import CustomUserCreationForm, ProfileForm
 
 
 class UsersCRUD:
@@ -74,7 +74,7 @@ class UsersCRUD:
 
                 messages.success(request, 'User account was created!')
                 login(request, user)
-                return redirect('users')
+                return redirect('edit-account')
             else:
                 messages.error(request, 'An error has occurred during registration.')
 
@@ -87,3 +87,17 @@ class UsersCRUD:
 
         content = {'profile': profile}
         return render(request, 'users/account.html', context=content)
+
+    @staticmethod
+    @login_required(login_url='login')
+    def edit_account(request):
+        form = ProfileForm(instance=request.user.profile)
+
+        if request.method == 'POST':
+            form = ProfileForm(request.POST, request.FILES, instance=request.user.profile)
+            if form.is_valid():
+                form.save()
+                return redirect('account')
+
+        content = {'form': form}
+        return render(request, 'users/profile_form.html', context=content)
