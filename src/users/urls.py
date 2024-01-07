@@ -9,4 +9,5 @@ urlpatterns = [
 
     path('', UsersCRUD.get_multi, name='users'),
     path('profile/<str:pk>/', UsersCRUD.get_single, name='user-profile'),
+    path('account/', UsersCRUD.account, name='account')
 ]

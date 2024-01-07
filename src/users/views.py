@@ -1,3 +1,4 @@
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate, logout
 from django.contrib import messages
@@ -78,3 +79,11 @@ class UsersCRUD:
                 messages.error(request, 'An error has occurred during registration.')
 
         return render(request, 'users/login_registration.html', context=content)
+
+    @staticmethod
+    @login_required(login_url='login')
+    def account(request):
+        profile = request.user.profile
+
+        content = {'profile': profile}
+        return render(request, 'users/account.html', context=content)
