@@ -24,13 +24,16 @@ class ProjectsCRUD:
     @staticmethod
     @login_required(login_url='login')
     def create(request):
+        profile = request.user.profile
         form = ProjectForm()
         content = {'form': form}
 
         if request.method == 'POST':
             form = ProjectForm(request.POST, request.FILES)
             if form.is_valid():
-                form.save()
+                project = form.save(commit=False)
+                project.owner = profile
+                project.save()
                 return redirect('projects')
 
         return render(request, 'projects/project_form.html', context=content)
@@ -38,7 +41,8 @@ class ProjectsCRUD:
     @staticmethod
     @login_required(login_url='login')
     def update(request, pk):
-        project = Project.objects.get(id=pk)
+        profile = request.user.profile
+        project = profile.project_set.get(id=pk)
         form = ProjectForm(instance=project)
         content = {'form': form}
 
@@ -53,7 +57,8 @@ class ProjectsCRUD:
     @staticmethod
     @login_required(login_url='login')
     def delete(request, pk):
-        project = Project.objects.get(id=pk)
+        profile = request.user.profile
+        project = profile.project_set.get(id=pk)
         content = {'object': project}
 
         if request.method == 'POST':

@@ -85,7 +85,7 @@
 
         <div class="settings">
           <h3 class="settings__title">Projects</h3>
-          <a class="tag tag--pill tag--sub settings__btn tag--lg" href="#">Add Project</a>
+          <a class="tag tag--pill tag--sub settings__btn tag--lg" href="{% url 'create-project' %}">Add Project</a>
         </div>
 
         <table class="settings__table">
@@ -99,8 +99,8 @@
               <p>{{project.description|slice:"200"}}</p>
             </td>
             <td class="settings__tableActions">
-              <a class="tag tag--pill tag--main settings__btn" href="#">Edit</a>
-              <a class="tag tag--pill tag--main settings__btn" href="#">Delete</a>
+              <a class="tag tag--pill tag--main settings__btn" href="{% url 'update-project' project.id %}">Edit</a>
+              <a class="tag tag--pill tag--main settings__btn" href="{% url 'delete-project' project.id %}">Delete</a>
             </td>
           </tr>
           {% endfor %}
