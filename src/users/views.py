@@ -3,7 +3,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate, logout
 from django.contrib import messages
 from .models import Profile, User
-from .forms import CustomUserCreationForm, ProfileForm
+from .forms import CustomUserCreationForm, ProfileForm, SkillForm
 
 
 class UsersCRUD:
@@ -101,3 +101,51 @@ class UsersCRUD:
 
         content = {'form': form}
         return render(request, 'users/profile_form.html', context=content)
+
+
+class SkillsCRUD:
+    @staticmethod
+    @login_required(login_url='login')
+    def create(request):
+        profile = request.user.profile
+        form = SkillForm()
+        content = {'form': form}
+
+        if request.method == 'POST':
+            form = SkillForm(request.POST)
+            if form.is_valid():
+                skill = form.save(commit=False)
+                skill.owner = profile
+                skill.save()
+                messages.success(request, 'Skill was successfully added!')
+                return redirect('account')
+
+        return render(request, 'users/skill_form.html', context=content)
+
+    @staticmethod
+    @login_required(login_url='login')
+    def update(request, pk):
+        profile = request.user.profile
+        skill = profile.skill_set.get(id=pk)
+        form = SkillForm(instance=skill)
+        content = {'form': form}
+
+        if request.method == 'POST':
+            form = SkillForm(request.POST, instance=skill)
+            if form.is_valid():
+                form.save()
+                messages.success(request, 'Skill was successfully updated!')
+                return redirect('account')
+
+        return render(request, 'users/skill_form.html', context=content)
+
+    @staticmethod
+    def delete(request, pk):
+        profile = request.user.profile
+        skill = profile.skill_set.get(id=pk)
+        content = {'object': skill}
+        if request.method == 'POST':
+            skill.delete()
+            messages.success(request, 'Skill was successfully deleted!')
+            return redirect('account')
+        return render(request, 'delete_object.html', context=content)

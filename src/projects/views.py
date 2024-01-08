@@ -34,7 +34,7 @@ class ProjectsCRUD:
                 project = form.save(commit=False)
                 project.owner = profile
                 project.save()
-                return redirect('projects')
+                return redirect('account')
 
         return render(request, 'projects/project_form.html', context=content)
 
@@ -50,7 +50,7 @@ class ProjectsCRUD:
             form = ProjectForm(request.POST, request.FILES, instance=project)
             if form.is_valid():
                 form.save()
-                return redirect('projects')
+                return redirect('account')
 
         return render(request, 'projects/project_form.html', context=content)
 
@@ -63,6 +63,6 @@ class ProjectsCRUD:
 
         if request.method == 'POST':
             project.delete()
-            return redirect('projects')
+            return redirect('account')
 
-        return render(request, 'projects/delete_object.html', context=content)
+        return render(request, 'delete_object.html', context=content)

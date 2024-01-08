@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.urls import path
-from users.views import UsersCRUD
+from users.views import UsersCRUD, SkillsCRUD
 
 urlpatterns = [
     path('login/', UsersCRUD.login_user, name='login'),
@@ -10,5 +10,9 @@ urlpatterns = [
     path('', UsersCRUD.get_multi, name='users'),
     path('profile/<str:pk>/', UsersCRUD.get_single, name='user-profile'),
     path('account/', UsersCRUD.account, name='account'),
-    path('account/edit/', UsersCRUD.edit_account, name='edit-account')
+    path('account/edit/', UsersCRUD.edit_account, name='edit-account'),
+
+    path('skill/create/', SkillsCRUD.create, name='create-skill'),
+    path('skill/update/<str:pk>/', SkillsCRUD.update, name='update-skill'),
+    path('skill/delete/<str:pk>/', SkillsCRUD.delete, name='delete-skill')
 ]
