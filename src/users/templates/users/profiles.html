@@ -30,7 +30,7 @@
     <div class="container">
       <div class="grid grid--three">
 
-        {% for profile in profiles %}
+        {% for profile in objects %}
         <div class="column card">
           <div class="dev">
             <a href="{% url 'user-profile' profile.id %}" class="card__body">
@@ -59,6 +59,8 @@
         </div>
       </div>
   </section>
+  {% include 'pagination.html' %}
+
 </main>
 
 {% endblock content %}

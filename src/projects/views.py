@@ -3,7 +3,7 @@ from django.contrib.auth.decorators import login_required
 
 from .models import Project
 from .forms import ProjectForm
-from app.utils import search_objects
+from app.utils import search_objects, pagination
 
 
 class ProjectsCRUD:
@@ -18,9 +18,12 @@ class ProjectsCRUD:
     @staticmethod
     def get_multi(request):
         projects, search_query = search_objects(request, Project)
-        content = {'projects': projects,
+        custom_range, projects = pagination(request, projects)
+
+        content = {'objects': projects,
                    'msg': 'Projects',
-                   'search_query': search_query}
+                   'search_query': search_query,
+                   'custom_range': custom_range}
         return render(request, 'projects/multi_projects.html', context=content)
 
     @staticmethod

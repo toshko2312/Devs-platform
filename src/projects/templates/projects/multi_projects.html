@@ -9,7 +9,7 @@
         </div>
 
         <div class="hero-section__search">
-          <form class="form" action="#" method="get">
+          <form id="searchForm" class="form" action="#" method="get">
             <div class="form__field">
               <label for="formInput#search">Search By Projects </label>
               <input class="input input--text" id="formInput#search" type="text" name="search_query"
@@ -26,7 +26,7 @@
       <div class="container">
         <div class="grid grid--three">
 
-          {% for project in projects %}
+          {% for project in objects %}
           <div class="column">
             <div class="card project">
               <a href="{% url 'project' project.id %}" class="project">
@@ -55,6 +55,8 @@
         </div>
       </div>
     </section>
+    {% include 'pagination.html' %}
+
   </main>
 
 {% endblock content %}

@@ -5,16 +5,18 @@ from django.contrib import messages
 
 from .models import Profile, User
 from .forms import CustomUserCreationForm, ProfileForm, SkillForm
-from app.utils import search_objects
+from app.utils import search_objects, pagination
 
 
 class UsersCRUD:
     @staticmethod
     def get_multi(request):
         profiles, search_query = search_objects(request, Profile)
+        custom_range, profiles = pagination(request, profiles)
         content = {
-            'profiles': profiles,
-            'search_query': search_query
+            'objects': profiles,
+            'search_query': search_query,
+            'custom_range': custom_range
         }
         return render(request, 'users/profiles.html', context=content)
 
