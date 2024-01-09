@@ -3,6 +3,7 @@ from django.contrib.auth.decorators import login_required
 
 from .models import Project
 from .forms import ProjectForm
+from app.utils import search_objects
 
 
 class ProjectsCRUD:
@@ -16,9 +17,10 @@ class ProjectsCRUD:
 
     @staticmethod
     def get_multi(request):
-        projects = Project.objects.all()
+        projects, search_query = search_objects(request, Project)
         content = {'projects': projects,
-                   'msg': 'Projects'}
+                   'msg': 'Projects',
+                   'search_query': search_query}
         return render(request, 'projects/multi_projects.html', context=content)
 
     @staticmethod

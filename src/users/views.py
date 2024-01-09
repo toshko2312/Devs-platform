@@ -2,16 +2,19 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate, logout
 from django.contrib import messages
+
 from .models import Profile, User
 from .forms import CustomUserCreationForm, ProfileForm, SkillForm
+from app.utils import search_objects
 
 
 class UsersCRUD:
     @staticmethod
     def get_multi(request):
-        profiles = Profile.objects.all()
+        profiles, search_query = search_objects(request, Profile)
         content = {
             'profiles': profiles,
+            'search_query': search_query
         }
         return render(request, 'users/profiles.html', context=content)
 
