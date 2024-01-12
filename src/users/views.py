@@ -51,7 +51,7 @@ class UsersCRUD:
 
             if user:
                 login(request, user)
-                return redirect('users')
+                return redirect(request.GET['next'] if 'next' in request.GET else 'account')
             else:
                 messages.error(request, 'Incorrect credentials.')
 
