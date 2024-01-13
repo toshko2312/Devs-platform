@@ -1,8 +1,10 @@
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
-from .serializers import ProjectSerializer
+
+from .serializers import ProjectSerializer, ProfileSerializer
 from projects.models import Project, Review
+from users.models import Profile
 
 
 @api_view(['GET'])
@@ -50,4 +52,24 @@ class ProjectsCRUD:
         project.get_vote_count()
 
         serializer = ProjectSerializer(project, many=False)
+
         return Response(serializer.data)
+
+
+class ProfilesCRUD:
+    @staticmethod
+    @api_view(['GET'])
+    def get_multi(request):
+        profiles = Profile.objects.all()
+        serializer = ProfileSerializer(profiles, many=True)
+
+        return Response(serializer.data)
+
+    @staticmethod
+    @api_view(['GET'])
+    def get_single(request, pk):
+        profile = Profile.objects.get(id=pk)
+        serializer = ProfileSerializer(profile, many=False)
+
+        return Response(serializer.data)
+
