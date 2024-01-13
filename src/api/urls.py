@@ -9,5 +9,6 @@ urlpatterns = [
 
     path('', get_routes),
     path('projects/', ProjectsCRUD.get_multi),
-    path('projects/<str:pk>', ProjectsCRUD.get_single),
+    path('projects/<str:pk>/', ProjectsCRUD.get_single),
+    path('projects/<str:pk>/vote/', ProjectsCRUD.vote)
 ]
