@@ -1,7 +1,10 @@
 from django.urls import path
 
-from . import views
+from .views import get_routes, ProjectsCRUD
 
 urlpatterns = [
-    path('', views.get_routes, name='routes')
+    path('', get_routes),
+    path('projects/', ProjectsCRUD.get_multi),
+    path('projects/<str:pk>', ProjectsCRUD.get_single)
+
 ]
