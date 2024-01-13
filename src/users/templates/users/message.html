@@ -1,0 +1,25 @@
+{% extends 'main.html' %}
+
+{% block content %}
+
+<main class="messagePage my-xl">
+  <div class="content-box">
+    <div class="message">
+      <a class="backButton" href="{% url 'inbox' %}">
+          <img src="data:image/png;base64,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">
+      </a>
+      <h2 class="message__subject">{{user_message.subject}}</h2>
+      {% if user_message.sender %}
+        <a href="{% url 'user-profile' user_message.sender.id %}" class="message__author">{{user_message.name}}</a>
+      {% else %}
+        <a class="message__author">{{user_message.name}}</a>
+      {% endif %}
+        <p class="message__date">{{user_message.created}}</p>
+        <div class="message__body">
+          {{user_message.body|linebreaksbr}}
+        </div>
+    </div>
+  </div>
+</main>
+
+{% endblock %}

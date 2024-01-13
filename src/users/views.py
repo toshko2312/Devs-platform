@@ -3,8 +3,8 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate, logout
 from django.contrib import messages
 
-from .models import Profile, User
-from .forms import CustomUserCreationForm, ProfileForm, SkillForm
+from .models import Profile, User, Message
+from .forms import CustomUserCreationForm, ProfileForm, SkillForm, MessageForm
 from app.utils import search_objects, pagination
 
 
@@ -108,6 +108,56 @@ class UsersCRUD:
         return render(request, 'users/profile_form.html', context=content)
 
 
+class MessagesCRUD:
+    @staticmethod
+    @login_required(login_url='login')
+    def get_multi(request):
+        profile = request.user.profile
+        user_messages = profile.messages.all()
+        unread_count = user_messages.filter(is_read=False).count()
+        content = {'user_messages': user_messages,
+                   'unread_count': unread_count}
+        return render(request, 'users/inbox.html', context=content)
+
+    @staticmethod
+    @login_required(login_url='login')
+    def get_single(request, pk):
+        user_message = request.user.profile.messages.get(id=pk)
+        if not user_message.is_read:
+            user_message.is_read = True
+            user_message.save()
+        content = {'user_message': user_message}
+        return render(request, 'users/message.html', context=content)
+
+    @staticmethod
+    def create(request, pk):
+        recipient = Profile.objects.get(id=pk)
+        form = MessageForm()
+
+        try:
+            sender = request.user.profile
+        except:
+            sender = None
+
+        if request.method == 'POST':
+            form = MessageForm(request.POST)
+            if form.is_valid():
+                user_message = form.save(commit=False)
+                user_message.sender = sender
+                user_message.recipient = recipient
+
+                if sender:
+                    user_message.name = sender.name
+                    user_message.email = sender.email
+                user_message.save()
+                messages.success(request, 'Message sent')
+                return redirect('user-profile', pk=pk)
+
+        content = {'pk': pk,
+                   'form': form}
+        return render(request, 'users/message_form.html', context=content)
+
+
 class SkillsCRUD:
     @staticmethod
     @login_required(login_url='login')
@@ -145,6 +195,7 @@ class SkillsCRUD:
         return render(request, 'users/skill_form.html', context=content)
 
     @staticmethod
+    @login_required(login_url='login')
     def delete(request, pk):
         profile = request.user.profile
         skill = profile.skill_set.get(id=pk)
