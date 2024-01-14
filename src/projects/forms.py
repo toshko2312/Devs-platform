@@ -6,13 +6,25 @@ from .models import Project, Review
 class ProjectForm(ModelForm):
     class Meta:
         model = Project
-        exclude = ('vote_total', 'vote_ratio', 'owner')
+        fields = ['title', 'description', 'image', 'demo_link', 'source_link', 'tags']
         widgets = {
             'tags': forms.CheckboxSelectMultiple(),
         }
 
     def __init__(self, *args, **kwargs):
         super(ProjectForm, self).__init__(*args, **kwargs)
+
+        for name, field in self.fields.items():
+            field.widget.attrs.update({'class': 'input'})
+
+
+class CreateProjectForm(ModelForm):
+    class Meta:
+        model = Project
+        fields = ['title', 'description', 'image', 'demo_link', 'source_link']
+
+    def __init__(self, *args, **kwargs):
+        super(CreateProjectForm, self).__init__(*args, **kwargs)
 
         for name, field in self.fields.items():
             field.widget.attrs.update({'class': 'input'})
