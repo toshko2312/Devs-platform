@@ -77,6 +77,9 @@ class ProjectsCRUD:
             form = ProjectForm(request.POST, request.FILES, instance=project)
             if form.is_valid():
                 project = form.save()
+                if not project.image:
+                    project.image = 'default.jpg'
+                    project.save()
                 for tag in new_tags:
                     tag, created = Tag.objects.get_or_create(name=tag)
                     project.tags.add(tag)

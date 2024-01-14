@@ -23,15 +23,6 @@ class Project(models.Model):
     class Meta:
         ordering = ['-vote_ratio', '-vote_total', 'title']
 
-    @property
-    def image_url(self):
-        try:
-            url = self.image.url
-        except:
-            self.image = 'default.jpg'
-            self.save()
-            url = self.image.url
-        return url
 
     @property
     def reviewers(self):

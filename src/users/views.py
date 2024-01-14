@@ -101,7 +101,10 @@ class UsersCRUD:
         if request.method == 'POST':
             form = ProfileForm(request.POST, request.FILES, instance=request.user.profile)
             if form.is_valid():
-                form.save()
+                profile = form.save()
+                if not profile.image:
+                    profile.image = 'profiles/user-default.png'
+                    profile.save()
                 return redirect('account')
 
         content = {'form': form}
