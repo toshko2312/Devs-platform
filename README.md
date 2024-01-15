@@ -16,7 +16,7 @@ pip install -r requirements.txt
 python manage.py runserver
 ```
 
-## Features:
+## Features
 - Features, related to Developers:
   * Create/Edit/Delite profile
   * Email notifications/password reset
@@ -26,6 +26,13 @@ python manage.py runserver
 - Features, related to Projects:
   * Create/Edit/Delete projects
   * Create/Delete tags
+ 
+ ## Preview
+![image](https://github.com/toshko2312/Devs-platform/assets/138567305/b73e2222-24b3-4936-9d80-d45830d12825)
+![image](https://github.com/toshko2312/Devs-platform/assets/138567305/c3f2faa5-8656-4a37-baad-566be7947d23)
+![image](https://github.com/toshko2312/Devs-platform/assets/138567305/87c55230-4bea-44ae-a751-82c13a056631)
+![image](https://github.com/toshko2312/Devs-platform/assets/138567305/1afa13f6-20cb-43b3-b84a-a299c69d71e2)
+![image](https://github.com/toshko2312/Devs-platform/assets/138567305/8a4cdd84-458c-4751-85d0-83c45d71bfa4)
 
 ## Project structure
 ```
