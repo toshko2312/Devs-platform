@@ -1,4 +1,4 @@
-# Dev platform
+# DevSearch
 
 ## Installation
 #### 1. Clone the project:
@@ -15,3 +15,27 @@ pip install -r requirements.txt
 ```
 python manage.py runserver
 ```
+
+## Features:
+- Features, related to Developers:
+  * Create/Edit/Delite profile
+  * Email notifications/password reset
+  * Create/Edit/Delete skills
+  * Read/Send messages to other users
+ 
+- Features, related to Projects:
+  * Create/Edit/Delete projects
+  * Create/Delete tags
+
+## Project structure
+```
+├───src               - source folder.
+│   ├───api           - project api.
+│   ├───app           - main app.
+│   ├───projects      - projects app.
+│   ├───static        - static files.
+│   ├───templates     - html templates.
+│   ├───users         - users app.
+```
+## License
+This project is licensed under the terms of MIT license.
