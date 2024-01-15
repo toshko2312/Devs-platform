@@ -1,3 +1,4 @@
 /src/venv/
 .idea
 /src/staticfiles/
+/src/.env
